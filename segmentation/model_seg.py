@@ -1,26 +1,15 @@
 #Model for segmentation task
-#import os
-#import imageio
 import matplotlib.pyplot as plt
-#import numpy as np
-#from matplotlib import image
-#import numpy
 import torch
-#from torchvision import datasets, transforms, utils
-#from PIL import Image, ImageOps
-#import json
-#from skimage import transform
-#from skimage import img_as_float
+
 from data_loader import data_kfold,myDataLoader
 from my_unet import myUNet
 from augmentation import GeometryAugmentation, IntensityAugmentation
 
 from pytorch_lightning import LightningModule
-#import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim
-#import io
-#from model import testtool
+
 
 class unet(LightningModule):
     def __init__(self, **kwargs):
@@ -110,8 +99,6 @@ from pytorch_lightning import Trainer
 from torch.utils.data import DataLoader
 import torch.cuda
 
-#import CNN
-#import Dataset
 #model = Res()
 #model = Res.load_from_checkpoint(checkpoint_path='./epoch=2-step=5183.ckpt')
 #data1 = myDataLoader()
