@@ -26,43 +26,7 @@ class myDataLoader(torch.utils.data.Dataset):
             for dir2 in os.listdir(os.path.join(self.data_dir, dir1)):
                 for file in os.listdir(os.path.join(self.data_dir,dir1,dir2)):
                     file_path = os.path.join(self.data_dir,dir1,dir2,file)
-                    '''
-                    if file.endswith('.png'):
-                        image = Image.open(file_path)
-                        #newsize = (512, 512)
-                        #image = image.resize(newsize)
 
-                        #sz = transforms.Resize((512,512))
-                        #image = sz(image)
-                        channel = transforms.Grayscale()
-                        image = channel(image)
-                        tnsr = transforms.ToTensor()
-                        sz_x,sz_y = image.size
-                        #sz_y = image.shape[2]
-                        #sz_x = image.shape[1]
-                        print(sz_x)
-                        print(sz_y)
-                        x_pad_1 = int(np.floor((512 - sz_x) / 2))
-                        x_pad_2 = int(np.ceil((512 - sz_x) / 2))
-
-                        y_pad_1 = int(np.floor((512 - sz_y) / 2))
-
-                        y_pad_2 = int(np.ceil((512 - sz_y) / 2))
-
-                        image = tnsr(image)
-                        pad = torch.nn.ZeroPad2d((x_pad_1,x_pad_2,y_pad_1,y_pad_2))
-                        image = pad(image)
-
-                        #print(self.x)
-                        #pil = transforms.ToPILImage()
-                        #image = pil(image)
-
-                        #image = tnsr(image)
-                        #image = image[0, ...]
-
-                        self.images.append(image)
-                        
-                    '''
 
                     if file.endswith('.json'):
                         with open(file_path, 'r') as file:
@@ -449,59 +413,6 @@ test1.test()
 #print(x)
 #tn = transforms.ToPILImage()
 #x= tn(x['images'])
-'''
-
-'''
-#plt.imshow(x, interpolation='nearest')
-#plt.show()
-from pytorch_lightning import LightningModule
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim
-
-class CNN(LightningModule):
-    def __init__(self):
-        super().__init__()
-        self.conv1 = nn.Conv2d(1, 8, kernel_size=3, stride=1, padding=1)
-        self.conv2 = nn.Conv2d(8, 64, kernel_size=3, stride=1, padding=1)
-        self.conv3 = nn.Conv2d(64,128, kernel_size=3, stride=1, padding=1)
-        self.pool = nn.MaxPool2d((2,2), stride=(2,2))
-        self.fc = nn.Linear(64*64*128,4)
-
-    def forward(self, x):
-        x = self.pool(F.relu(self.conv1(x)))
-        x = self.pool(F.relu(self.conv2(x)))
-        x = self.pool(F.relu(self.conv3(x)))
-        x = x.view(x.size(0), -1)
-        x = F.relu(self.fc(x))
-        return x
-
-    def training_step(self, batch, batch_nb):
-        x = batch['images']
-        print(x.size())
-        y = batch['points']
-        print(y.size())
-        loss = F.mse_loss(self(x).flatten(),y.flatten())
-        return loss
-
-    def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=0.02)
-
-from pytorch_lightning import Trainer
-from torch.utils.data import DataLoader
-import torch.cuda
-
-#import CNN
-#import Dataset
-model = CNN()
-data1 = myDataLoader()
-train_loader = DataLoader(data1, batch_size=8)
-trainer = Trainer(
-    accelerator="auto",
-    devices=1
-    if torch.cuda.is_available() else None,
-    max_epochs = 10 )
-trainer.fit(model, train_loader)
 '''
 
 
